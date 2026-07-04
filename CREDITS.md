@@ -44,6 +44,10 @@
 
 - anisotime-js / ANISOtime: © Kensuke Konishi, Anselme F. E. Borgeaud, Kenji Kawai, Robert J. Geller ほか（UT Global Seismology）。**GPL-3.0**。github.com/UT-GlobalSeismology/anisotime
 
+## 同梱ライブラリ / Bundled libraries
+
+- QR Code Generator for JavaScript: © 2009 Kazuhiko Arase。**MIT**。github.com/kazuhikoarase/qrcode-generator（`share qr` の QR 生成に使用。"QR Code" は株式会社デンソーウェーブの登録商標）
+
 ---
 初回 GitHub 公開（2026-07）で再配布可否が未確認のため**除外**したデータ（LIP barcode, Scotese, Müller2019/Li2013,
 重力, 発震機構(GCMT), 地殻(CRUST1.0), 古地磁気極(GPMDB), 隕石構造, 日本地体構造, ULVZ, D″モデル 等）は
