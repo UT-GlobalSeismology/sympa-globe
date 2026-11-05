@@ -37,7 +37,7 @@
 | 気象庁 一元化震源（デモ用サブセット） | 日本の地震 | 公共データ利用規約（第1.0版・CC BY 4.0 互換） | 出典: 気象庁ホームページ https://www.jma.go.jp/ 。**当方が抽出・再フォーマットの編集加工を行っている** |
 | Global Volcanism Program | 火山 | Smithsonian Terms of Use（**教育・非商用目的**） | Global Volcanism Program, *Volcanoes of the World*, Smithsonian Institution, https://volcano.si.edu/ （版番号・取得日を要明記） |
 | EarthByte LIP v2 | 大規模火成岩区 | CC-BY 4.0 | Johansson, Zahirovic & Müller (2018), doi:10.1029/2017GL076691 |
-| LIP 輪郭（Ernst 版） | 大陸洪水玄武岩＋岩脈群（先カンブリア〜現在） | 著者 R. E. Ernst の明示的許諾（2026-09-10。無償版・有償版とも） | Ernst, R.E. & Youbi, N. (2017) *Palaeogeogr. Palaeoclimatol. Palaeoecol.* 478, 30–52, doi:10.1016/j.palaeo.2017.03.014 ／ Ernst, R.E. et al. (2021) Ernst, Dickson & Bekker 編『Large Igneous Provinces: A Driver of Global Environmental and Biotic Changes』AGU Geophys. Monogr. 255, 1–26, doi:10.1002/9781119507444.ch1 ／ Park, Y. et al. (2021) 同書, doi:10.1002/9781119507444.ch7（体裁は権利者本人の指定 2026-09-11） |
+| LIP 輪郭（Ernst 版） | 大陸洪水玄武岩＋岩脈群（先カンブリア〜現在） | 著者（R. E. Ernst）より許諾を得て同梱 | Ernst, R.E. & Youbi, N. (2017) *Palaeogeogr. Palaeoclimatol. Palaeoecol.* 478, 30–52, doi:10.1016/j.palaeo.2017.03.014 ／ Ernst, R.E. et al. (2021) Ernst, Dickson & Bekker 編『Large Igneous Provinces: A Driver of Global Environmental and Biotic Changes』AGU Geophys. Monogr. 255, 1–26, doi:10.1002/9781119507444.ch1 ／ Park, Y. et al. (2021) 同書, doi:10.1002/9781119507444.ch7 |
 | ホットスポット | ホットスポットと移動軌跡 | CC-BY 4.0 | EarthByte GPlates GeoData（Whittaker et al. (2015), doi:10.1038/ngeo2437）。深部起源の分類は Courtillot et al. (2003), doi:10.1016/S0012-821X(02)01048-8 |
 
 ## マントル構造（地震波トモグラフィ）
@@ -64,7 +64,6 @@
 | データ | 用途 | ライセンス | 出典・帰属 |
 |--------|------|-----------|-----------|
 | 20万分の1日本シームレス地質図 V2 | 日本の地質 | 政府標準利用規約2.0（CC-BY 相当） | 産総研地質調査総合センター「20万分の1日本シームレス地質図V2」https://gbank.gsj.jp/seamless/ |
-| 地質区 provinces | 全球の地質区分 | **GPL-3.0** | Hasterok et al. (2022), doi:10.1016/j.earscirev.2022.104069; github.com/dhasterok/global_tectonics |
 
 ## 理論走時 / Travel-time theory
 
