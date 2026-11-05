@@ -1,54 +1,82 @@
 # データソースの出典・ライセンス / Data Credits
 
-シンパ！（配布ビルド `npm run build:dist` / `--globe`）に**実際に同梱される**データソースの出典と
-ライセンスです。ソフトウェア本体は GPL-3.0（`LICENSE`）ですが、各データは以下の各ライセンスに従います。
-ライセンス方針の詳細と、初回公開で除外したデータは `docs/LICENSING.md` を参照してください。
+シンパ！の配布ビルド（`npm run build:dist` / `--globe`）に**実際に同梱される**データソースの出典と
+ライセンスです。ソフトウェア本体とは別に、各データはそれぞれのライセンスに従います。
 
-アプリ内では `refs` コマンドでクリック可能な引用リンクを表示できます。
+アプリ内では `refs` コマンドで、クリック可能な引用リンクとして一覧できます。
 
-## 確認済み（明示ライセンス）
+## 海岸線・地形・地球物理場
 
 | データ | 用途 | ライセンス | 出典・帰属 |
 |--------|------|-----------|-----------|
 | Natural Earth（海岸線 50m/110m） | 海岸線 | Public Domain | naturalearthdata.com |
-| Slab2 | 沈み込み帯形状 | Public Domain (USGS) | Hayes et al. (2018), doi:10.5066/F7PV6JNV |
-| USGS NEIC / ComCat | 地震・核実験 | Public Domain (US Gov) | USGS Earthquake Hazards Program |
+| ETOPO1 | 地形・海底地形 | Public Domain (NOAA NCEI) | Amante & Eakins (2009), NOAA NCEI |
+| GlobSed v3 | 海洋堆積層厚 | Public Domain (NOAA NCEI) | Straume et al. (2019), doi:10.1029/2018GC008115 |
+| EMAG2v3 | 地磁気異常 | Public Domain (NOAA NCEI) | Meyer, Saltus & Chulliat (2017), doi:10.7289/V5H70CVX |
+
+## プレートテクトニクス
+
+| データ | 用途 | ライセンス | 出典・帰属 |
+|--------|------|-----------|-----------|
+| PB2002 | プレート境界 | **ODC-By 1.0**（帰属表示で商用可・サブライセンス不可） | Bird (2003), doi:10.1029/2001GC000252。整備・再配布: Hugo Ahlenius (Nordpil), github.com/fraxen/tectonicplates |
+| NNR-MORVEL56 | 現在のプレート運動 | 非商用利用は許諾（**著者が商用権を留保**） | Argus, Gordon & DeMets (2011), doi:10.1029/2011GC003751 |
+| NUVEL-1A | 現在のプレート運動（比較用） | — | DeMets, Gordon, Argus & Stein (1994), doi:10.1029/94GL02118 |
+| GSRM v2.1 | ひずみ速度・プレート運動 | 著者（C. Kreemer）より許諾を得て同梱 | Kreemer, Blewitt & Klein (2014), doi:10.1002/2014GC005407 |
 | Merdith 2021 | プレート復元 | CC-BY 4.0 | Merdith et al. (2021), Zenodo 4485738 |
-| Cao 2024 | プレート復元 | CC-BY 4.0 | Cao et al. (2024), GPlates GWS |
-| Matthews 2016 | プレート復元 | CC-BY 4.0 | Matthews et al. (2016); Domeier & Torsvik (2014); Müller et al. (2016) |
-| LIP (EarthByte v2) | 大規模火成岩区 | CC-BY 4.0 | Johansson, Zahirovic & Müller (2018), GRL 45 |
-| 海洋底年代グリッド (EarthByte) | 海洋底の年代 | CC-BY 4.0 | Müller et al.（EarthByte seafloor age grid） |
-| 地質区 provinces | 地質区分 | **GPL-3.0** | Hasterok et al. (2022), Earth-Sci. Rev. 231; github.com/dhasterok/global_tectonics |
-| 日本シームレス地質図 V2 | 日本の地質 | 政府標準利用規約2.0 (CC-BY 相当) | 産総研地質調査総合センター「20万分の1日本シームレス地質図V2」https://gbank.gsj.jp/seamless/ |
-| GNSS (NGL MIDAS/IGS14) | 地表速度 | NGL 公開 | Blewitt, Hammond & Kreemer, Nevada Geodetic Lab |
-| FDSN 観測点 | 観測網 | IRIS/EarthScope DMC 公開 | IRIS/EarthScope Data Management Center |
+| Matthews 2016 | プレート復元 | CC-BY 4.0 | Matthews et al. (2016), doi:10.1016/j.gloplacha.2016.10.002; Domeier & Torsvik (2014); Müller et al. (2016) |
+| Cao 2024 | プレート復元 | CC-BY 4.0 | Cao et al. (2024), Zenodo 10910449 |
+| 海洋底年代グリッド | 海洋底の年代 | **CC-BY 4.0** | Seton et al. (2020), doi:10.1029/2020GC009214（データ: Zenodo 6782543） |
+| Slab2 | 沈み込み帯の形状 | Public Domain (USGS) | Hayes et al. (2018), doi:10.5066/F7PV6JNV |
+| World Stress Map 2016 | 地殻応力場 | CC-BY 4.0 | Heidbach et al. (2016), GFZ Data Services, doi:10.5880/WSM.2016.001 |
 
-## 公開データ（論文・NCEI 等、要引用／public-domain 濃厚）
+## 地震・火山・火成活動
 
-以下は公開された論文・政府機関（NCEI 等）由来で、帰属明記のうえ研究・教育目的で広く再利用されているもの。
-明示的なライセンスファイルが伴わないものを含むため、正式な再配布条件は各出典で確認のこと（`docs/LICENSING.md` D 節）。
+| データ | 用途 | ライセンス | 出典・帰属 |
+|--------|------|-----------|-----------|
+| USGS NEIC / ComCat | 地震・核実験 | Public Domain (US Gov) | USGS Earthquake Hazards Program |
+| 気象庁 一元化震源（デモ用サブセット） | 日本の地震 | 公共データ利用規約（第1.0版・CC BY 4.0 互換） | 出典: 気象庁ホームページ https://www.jma.go.jp/ 。**当方が抽出・再フォーマットの編集加工を行っている** |
+| Global Volcanism Program | 火山 | Smithsonian Terms of Use（**教育・非商用目的**） | Global Volcanism Program, *Volcanoes of the World*, Smithsonian Institution, https://volcano.si.edu/ （版番号・取得日を要明記） |
+| EarthByte LIP v2 | 大規模火成岩区 | CC-BY 4.0 | Johansson, Zahirovic & Müller (2018), doi:10.1029/2017GL076691 |
+| LIP 輪郭（Ernst 版） | 大陸洪水玄武岩＋岩脈群（先カンブリア〜現在） | 著者 R. E. Ernst の明示的許諾（2026-09-10。無償版・有償版とも） | Ernst, R.E. & Youbi, N. (2017) *Palaeogeogr. Palaeoclimatol. Palaeoecol.* 478, 30–52, doi:10.1016/j.palaeo.2017.03.014 ／ Ernst, R.E. et al. (2021) Ernst, Dickson & Bekker 編『Large Igneous Provinces: A Driver of Global Environmental and Biotic Changes』AGU Geophys. Monogr. 255, 1–26, doi:10.1002/9781119507444.ch1 ／ Park, Y. et al. (2021) 同書, doi:10.1002/9781119507444.ch7（体裁は権利者本人の指定 2026-09-11） |
+| ホットスポット | ホットスポットと移動軌跡 | CC-BY 4.0 | EarthByte GPlates GeoData（Whittaker et al. (2015), doi:10.1038/ngeo2437）。深部起源の分類は Courtillot et al. (2003), doi:10.1016/S0012-821X(02)01048-8 |
 
-- プレート境界: Bird (2003), doi:10.1029/2001GC000252
-- プレート運動: NNR-MORVEL56 / NUVEL-1A (Argus, Gordon & DeMets 2011; DeMets et al.)
-- ひずみ速度: GSRM v2.1 (Kreemer, Blewitt & Klein 2014)
-- 起伏 / 海底地形: ETOPO1 (Amante & Eakins 2009, NOAA NCEI)
-- 熱流量: Lucazeau (2019), G-Cubed 20
-- 堆積層厚: GlobSed v3 (Straume et al. 2019, NCEI)
-- 磁気異常: EMAG2v3 (Meyer, Saltus & Chulliat 2017, NCEI)
-- トモグラフィ (EMC 各モデル): 各モデル著者を要引用（S40RTS: Ritsema et al. 2011 ほか）。IRIS/EarthScope EMC
-- ホットスポット: Courtillot et al. (2003), EPSL 205
-- 地震カタログ（日本, デモ用サブセット）: 気象庁一元化震源カタログ
-- 火山（完新世火山の位置・テクトニクス設定）: Global Volcanism Program, *Volcanoes of the World*, Smithsonian Institution, https://volcano.si.edu/ 。**要出典**（GVP・Smithsonian＋バージョン/取得日を明記）。GVP の DB compilation は米国政府職員の成果物（事実データ＝位置・型は著作権対象外と解される）。ただし Smithsonian 公式 Terms of Use は「教育・非商用目的での利用」を条件とし**商用利用を明示的に制限**する点に注意（本教材＝教育・非商用配布）。詳細は `docs/LICENSING.md` D-3。
+## マントル構造（地震波トモグラフィ）
+
+| データ | 用途 | ライセンス | 出典・帰属 |
+|--------|------|-----------|-----------|
+| S40RTS | S 波速度（深さスライス・断面） | 著者（J. Ritsema）より許諾を得て同梱 | Ritsema, Deuss, van Heijst & Woodhouse (2011), *Geophys. J. Int.* 184, 1223–1236, doi:10.1111/j.1365-246X.2010.04884.x |
+| S362ANI | S 波速度 | IRIS/EarthScope EMC で公開（モデルの著者に帰属） | Kustowski, Ekström & Dziewoński (2008), *J. Geophys. Res.* 113, doi:10.1029/2007JB005169 |
+| SEISGLOB2 | S 波速度 | 同上 | Durand, Debayle, Ricard, Zaroli & Lambotte (2017), *Geophys. J. Int.* 211, 1628–1639, doi:10.1093/gji/ggx405 |
+| GyPSuM | S 波速度 | 同上 | Simmons, Forte, Boschi & Grand (2010), *J. Geophys. Res.* 115, doi:10.1029/2010JB007631 |
+| SGLOBE-rani | S 波速度 | 同上 | Chang, Ferreira, Ritsema, van Heijst & Woodhouse (2015), *J. Geophys. Res. Solid Earth* 120, 4278–4300, doi:10.1002/2014JB011824 |
+| SAW642AN | S 波速度 | 同上 | Mégnin & Romanowicz (2000), *Geophys. J. Int.* 143, 709–728, doi:10.1046/j.1365-246x.2000.00298.x |
+| SEMUCB-WM1 | S 波速度 | 同上 | French & Romanowicz (2014), *Geophys. J. Int.* 199, 1303–1327, doi:10.1093/gji/ggu334 |
+
+## 観測網
+
+| データ | 用途 | ライセンス | 出典・帰属 |
+|--------|------|-----------|-----------|
+| NGL MIDAS (IGS14) | GNSS 地表速度 | 著者（G. Blewitt ら）より許諾を得て同梱 | Blewitt, Hammond & Kreemer (2018), doi:10.1029/2018EO104623; Blewitt et al. (2016), doi:10.1002/2015JB012552 |
+| FDSN 観測点メタデータ | 観測網 | CC-BY 4.0（既定） | IRIS/EarthScope（NSF SAGE Facility）および各観測網の運用機関 |
+
+## 日本の地質（フル版・配布版のみ）
+
+| データ | 用途 | ライセンス | 出典・帰属 |
+|--------|------|-----------|-----------|
+| 20万分の1日本シームレス地質図 V2 | 日本の地質 | 政府標準利用規約2.0（CC-BY 相当） | 産総研地質調査総合センター「20万分の1日本シームレス地質図V2」https://gbank.gsj.jp/seamless/ |
+| 地質区 provinces | 全球の地質区分 | **GPL-3.0** | Hasterok et al. (2022), doi:10.1016/j.earscirev.2022.104069; github.com/dhasterok/global_tectonics |
 
 ## 理論走時 / Travel-time theory
 
-- anisotime-js / ANISOtime: © Kensuke Konishi, Anselme F. E. Borgeaud, Kenji Kawai, Robert J. Geller ほか（UT Global Seismology）。**GPL-3.0**。github.com/UT-GlobalSeismology/anisotime
+- anisotime-js / ANISOtime: © Kensuke Konishi, Anselme F. E. Borgeaud, Kenji Kawai, Robert J. Geller ほか
+  （UT Global Seismology）。**GPL-3.0**。github.com/UT-GlobalSeismology/anisotime
 
 ## 同梱ライブラリ / Bundled libraries
 
-- QR Code Generator for JavaScript: © 2009 Kazuhiko Arase。**MIT**。github.com/kazuhikoarase/qrcode-generator（`share qr` の QR 生成に使用。"QR Code" は株式会社デンソーウェーブの登録商標）
+- QR Code Generator for JavaScript: © 2009 Kazuhiko Arase。**MIT**。github.com/kazuhikoarase/qrcode-generator
+  （`share qr` の QR 生成に使用。"QR Code" は株式会社デンソーウェーブの登録商標）
 
 ---
-初回 GitHub 公開（2026-07）で再配布可否が未確認のため**除外**したデータ（LIP barcode, Scotese, Müller2019/Li2013,
-重力, 発震機構(GCMT), 地殻(CRUST1.0), 古地磁気極(GPMDB), 隕石構造, 日本地体構造, ULVZ, D″モデル 等）は
-`docs/LICENSING.md` を参照。ライセンス確認後に順次追加予定。海洋底年代（EarthByte CC-BY）と火山（GVP）は確認のうえ同梱に戻した。
+
+各データは、それぞれの配布元が定める条件に従って同梱しています。再配布条件を満たさないデータは
+配布ビルドから除外しています。データの利用にあたっては、上記の出典を明記してください。

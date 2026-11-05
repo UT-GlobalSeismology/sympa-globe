@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Sympa! Globe マニュアル (v0.19.0)</title>
+  <title>Sympa! Globe マニュアル (v1.2.0)</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -238,7 +238,7 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Sympa! Globe マニュアル (v0.19.0)</h1>
+<h1 class="title">Sympa! Globe マニュアル (v1.2.0)</h1>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
@@ -283,7 +283,9 @@ id="toc-小学生モードふりがなmap-ruby">4.4.
 小学生モード（ふりがな）<code>map ruby</code></a></li>
 <li><a href="#投影法拡張版" id="toc-投影法拡張版">4.5.
 投影法（拡張版）</a></li>
-<li><a href="#投影法" id="toc-投影法">4.6. 投影法</a></li>
+<li><a href="#ワンコマンド教材デモmap-demo"
+id="toc-ワンコマンド教材デモmap-demo">4.6.
+ワンコマンド教材デモ（<code>map demo</code>）</a></li>
 <li><a href="#レイヤと精度" id="toc-レイヤと精度">4.7.
 レイヤと精度</a></li>
 <li><a href="#緯度経度グラティキュール"
@@ -422,11 +424,13 @@ id="toc-地図モードの既知の制限-4.38-より">地図モードの既知�
 の世界地図・地球儀ツール。プレート運動・海洋底拡大・地震分布・マントルの三次元構造などを、CLI
 コマンドで自在に切り替えながら見られる。</p>
 <h2 id="クイックスタート">1. クイックスタート</h2>
-<pre><code>map proj ortho              # 地球儀表示に切替
+<pre><code>map demo spreading          # ワンコマンド教材デモ（海洋底拡大。一覧は `map demo`）
+map proj ortho              # 地球儀表示に切替
 map plate-model merdith2021 # 大陸復元モデルを選択
 map plate-age 200           # 200 Ma（恐竜時代)の大陸配置に
 map tint age                # 海洋底年代を色で表示
 map split age relief        # 年代と地形を左右に並べて比較
+map split age age           # 同じ物理量を2回＝左が表側・右が裏側（地球の反対側）
 share qr                    # 今のビューを QR コードで共有（教室提示・再現用）</code></pre>
 <ul>
 <li><p>⚠ <code>share</code>／<code>share qr</code>
@@ -444,11 +448,10 @@ share qr                    # 今のビューを QR コードで共有（教室�
 <h2 id="起動と画面構成">2. 起動と画面構成</h2>
 <h3 id="起動">起動</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> sympa-globe.html</span></code></pre></div>
-<p>Globe は開くと自動的に世界地図モードで起動する（共有リンク
-<code>#s=…</code> で開いた場合はそのビューを再現）。</p>
+<p>Globe は開くと自動的に世界地図モードで起動する（§ 1 参照）。</p>
 <h3 id="画面レイアウト">画面レイアウト</h3>
 <pre><code>┌─────────────────────────────────┐
-│ Sympa! Globe v0.1.0            │  ヘッダ（📖 マニュアルボタンあり）
+│ Sympa! Globe &lt;版数&gt;            │  ヘッダ（📖 マニュアルボタンあり）
 ├─────────────────────────────────┤
 │ ファイル: [picker]              │  自前 CSV/GeoJSON を読む時に使用（任意）
 ├─────────────────────────────────┤
@@ -563,6 +566,13 @@ share | share qr       # 現在のビューを再現する共有リンク／QR�
 <h2 id="世界地図モード-map">4. 世界地図モード <code>map</code></h2>
 <p>震源・観測点を世界地図上に配置し、震源↔︎観測点の大円弧を描画するモード。<code>recsec</code>
 同様プロットエリアを地図に切り替える。</p>
+<blockquote>
+<p>Sympa! Globe
+は波形ビューアのシンパ！と同じエンジンで動くので、<strong>波形版から受け継いだコマンド</strong>（<code>r</code>／<code>rh</code>
+での SAC 読み込み、<code>recsec</code>、CLI ステータスバーの
+<code>in memory</code>／<code>current</code>）もそのまま生きている。地図教材として使うぶんには波形ファイルは要らず、仮想震源・観測点（§
+4.39）だけで完結する。</p>
+</blockquote>
 <h3 id="入る出る">4.1. 入る・出る</h3>
 <pre><code>map                     # 地図モード ON（波形プロットを地図に切替）
 map off                 # 通常プロットへ戻る（traces 数に応じて single / p1）</code></pre>
@@ -584,7 +594,7 @@ map display s            # 1×（標準に戻す）</code></pre>
 <li><strong>提示スケール（<code>map display</code>）は画面表示のみ</strong>で、SVG/PNG
 書き出し（<code>map save</code>）は標準サイズのまま。論文・印刷用に<strong>書き出しだけ</strong>拡大したいときは
 <code>map paper</code>（下記
-5.3）を使う＝画面と書き出しでスケールを分離できる。</li>
+4.3）を使う＝画面と書き出しでスケールを分離できる。</li>
 <li>iPad 等でも Web
 として表示は可能（タッチ操作の最適化は今後の課題）。</li>
 </ul>
@@ -630,13 +640,17 @@ map ruby off            # OFF（既定）</code></pre>
 map proj aeqd                  # 中心点周りの等距離（震源中心）
 map proj ortho                 # 球面（半球見える）
 map proj mollweide             # 楕円形 pseudocylindrical 等積
+map proj                       # 現在の投影法を表示
 
 map rotate &lt;lon&gt; &lt;lat&gt;         # Orthographic の中心経緯度
 map rotate auto                # [0, 0] にリセット
 map home                       # 視点リセット（回転→[0,0]＋ロック解除、ズームは維持）
 map lock &lt;地塊名&gt;              # 指定地塊を画面中央に固定（プレート復元＋ortho 専用）
 map lock off                   # ロック解除
-map height &lt;vh|px|auto&gt;        # 地図キャンバスの高さ（例 90=90vh / 700=700px / auto=自動）</code></pre>
+map style land-color land|plate|off   # 復元図の大陸を塗る（既定 land＝陸を一色）
+map height &lt;vh|px|auto&gt;        # 地図キャンバスの高さ（例 90=90vh / 700=700px / auto=自動）
+map center &lt;lon&gt; &lt;lat&gt;         # AEQD の中心を明示指定
+map center auto                # 中心指定を解除（先頭イベントに戻る）</code></pre>
 <p>地図モードでは上部の「ファイル選択」欄を自動で隠し、キャンバスを
 <strong>CLI の上を埋める高さ</strong> （画面の縦幅と CLI
 の高さに連動）にして
@@ -655,7 +669,12 @@ map height &lt;vh|px|auto&gt;        # 地図キャンバスの高さ（例 90=9
 ボタン</strong>（ortho 時のみ表示）で視点リセット（<code>map home</code>
 と同じ＝回転を [0,0]
 に戻し、ロックも解除）。ズーム/パンは維持される（それらは<strong>ダブルクリック</strong>で
-auto-fit） - <strong>視点ロック（地塊追従）</strong>:
+auto-fit） - <strong>復元した大陸の塗り</strong>
+<code>map style land-color &lt;land|plate|off&gt;</code>:
+プレート復元図で、復元モデルの海岸線ポリゴン（地塊ごとの閉じた多角形）を塗る。<strong><code>land</code>（既定）＝陸を一色</strong>（淡い黄土色。古地理図の定番で、超大陸の形・陸海の別が一目で読める）／<strong><code>plate</code>＝ポリゴンごとに色を変える</strong>（⚠
+モデルのプレートIDは<strong>地塊単位</strong>なので「色＝プレート」ではない。パンゲアが数十色のパッチワークになる）／<strong><code>off</code>＝塗らない</strong>（輪郭線だけ＝従来の見た目）。出所は復元モデル自身（Merdith
+et al. 2021 ほか, CC-BY 4.0）。 -
+<strong>視点ロック（地塊追従）</strong>:
 プレート復元中（<code>map plate-model</code>）に地球上の地塊をクリックすると、その地塊を画面中央に固定。タイムスライダー（<code>map plate-age</code>）を動かすと中心がその地塊に追従して移動するので、注目地塊（例:
 南中国）を見つめたまま時代を遡れる。CLI は
 <code>map lock 南中国</code>、地塊名はモデルのラベル一覧に準拠。同じ地塊を再クリック／⟲
@@ -671,19 +690,45 @@ auto-fit） - <strong>視点ロック（地塊追従）</strong>:
 Ortho の責務） -
 <strong>左ドラッグでも経度方向の回転</strong>できる（Ortho
 と統一感、上下方向のドラッグは無視）</p>
+<p><strong>AEQD（方位等距離）</strong>: -
+中心点周りの等距離投影で、<strong>中心からの大円が直線になる</strong>（震源中心の距離・方位を読むのに向く）
+-
+中心は既定で先頭の震源。<code>map center &lt;lon&gt; &lt;lat&gt;</code>
+で明示指定、<code>map center auto</code> で解除 -
+単一の中心点を必要とするため、<strong>複数イベントがあるときは自動的に
+<code>plate-carree</code> で描画される</strong>（設定
+<code>state.map.proj</code> 自体は維持）</p>
 <p><strong>プレート運動ベクトル</strong>は <strong>全 4
 投影で描画される</strong>。各点で local east/north Jacobian
 を計算して投影歪に対応。</p>
-<h3 id="投影法">4.6. 投影法</h3>
-<pre><code>map proj plate-carree   # 等経等緯（既定。複数震源 OK）
-map proj aeqd           # 方位等距離（中心震源、大円が直線）
-map proj                # 現在の投影法を表示</code></pre>
-<p><code>aeqd</code>
-は単一の中心点を必要とするため、<code>map.events</code>
-が複数イベントを含むときは自動的に <code>plate-carree</code>
-で描画される（設定 <code>state.map.proj</code> 自体は維持）。</p>
-<pre><code>map center &lt;lon&gt; &lt;lat&gt;  # AEQD 中心を明示指定
-map center auto         # 中心指定を解除（先頭イベントに戻る）</code></pre>
+<h3 id="ワンコマンド教材デモmap-demo">4.6.
+ワンコマンド教材デモ（<code>map demo</code>）</h3>
+<p><code>map demo &lt;name&gt;</code>
+は、投影法・タイント・レイヤ・ビューポートを<strong>ワンコマンド</strong>でまとめて設定し、その場で授業・発表に使える状態にする。<code>map demo</code>
+だけで一覧が出る。2系統ある。</p>
+<p><strong>(1) 地球物理コンセプトのデモ</strong> —
+1つの概念を1コマンドで:</p>
+<pre><code>map demo spreading        # 海洋底拡大 — 海嶺対称の海洋底年代（Mollweide）
+map demo subduction       # 沈み込み帯（日本）— 海溝・和達-ベニオフ面・火山弧
+map demo isostasy         # アイソスタシー — ヒマラヤの地殻の根（ブーゲー異常）
+map demo plumes           # ホットスポット — 太平洋のプルームと火山列（地球儀）
+map demo floodbasalts     # 洪水玄武岩とホットスポット — LIP→プルーム尾の連結（全球）
+map demo deformation      # プレートは変形帯で動く — ひずみ速度＋地震＋境界
+map demo stress           # 地殻応力場 — SHmax 方位とプレート境界</code></pre>
+<p>各デモは関係するレイヤだけを ON にし（他は
+OFF）、適切な投影法・中心・タイントを設定する。実行後にコンソールに「何を見ているか／何に注目すべきか」の解説が出る。</p>
+<p><strong>(2) 地震（気象庁カタログの余震系列）</strong> —
+代表的な余震系列を1コマンドで:</p>
+<pre><code>map demo kobe             # 1995 兵庫県南部地震 (M7.3)
+map demo tottori          # 2000 鳥取県西部地震 (M7.3)
+map demo tohoku           # 2011 東北地方太平洋沖地震 (M9.0)
+map demo kumamoto         # 2016 熊本地震 (M7.3)</code></pre>
+<p>地震デモは JMA
+カタログへの切替・時間窓の設定・ビューポートのズームをまとめて行い、余震雲（＝断層面）が画面いっぱいに出る状態にする。表示後
+<code>map time play</code> で時刻送り再生、<code>map catalog usgs</code>
+で世界カタログに戻る（カタログ自体の説明は § 4.14）。</p>
+<p>どちらの系統も
+Mw・深さ・領域マスクが残っていればクリアされ、クリーンな表示になる。</p>
 <h3 id="レイヤと精度">4.7. レイヤと精度</h3>
 <pre><code>map layer coastline on|off    # 海岸線（NE 50m, 既定）の ON/OFF
 map coast load &lt;file&gt;         # 自前の細かい海岸線(TopoJSON {transform,arcs})に差替（off で内蔵へ復帰）
@@ -845,7 +890,7 @@ ON
 すれば、一つの余震系列の時空間発展だけを繰り返し再生できる（範囲未設定なら
 1950–2026 年を通しで再生）。<code>map time play 3</code> で 3
 倍速。<code>map time stop</code>・Esc・スライダーを掴むと停止。</li>
-<li>カバー範囲は 1950-2026 年（震源・核実験は 1950 年代〜）。</li>
+<li>カバー範囲は 1950–2025 年（震源・核実験は 1950 年代〜）。</li>
 <li>SVG
 出力（<code>map save</code>）にも時間窓が反映される（窓内のイベントだけが書き出される）。</li>
 </ul>
@@ -863,8 +908,7 @@ map region draw                 # 地図上をドラッグして箱を選択
 map region off                  # 領域マスク解除</code></pre>
 <p>タイムスライダー（§
 4.12）の<strong>時間軸</strong>に加え、震源・ビーチボール・核実験の 3
-レイヤを<strong>規模・深さ・領域</strong>でも絞り込める（Step III
-のマスク群）。すべて掛け合わせ（AND）で効く。</p>
+レイヤを<strong>規模・深さ・領域</strong>でも絞り込める。すべて掛け合わせ（AND）で効く。</p>
 <ul>
 <li><strong><code>map mag &lt;min&gt; [max]</code></strong> — Mw
 範囲マスク。引数 1 個なら下限のみ（上限
@@ -917,35 +961,9 @@ events、約 18 MB）をファイル選択で読み込む。読み込むとデ�
 Hi-net・大学等の観測データを含む）。USGS は USGS Earthquake
 Catalog（FDSN）。</li>
 </ul>
-<h4
-id="ワンコマンド教材デモmap-demo">ワンコマンド教材デモ（<code>map demo</code>）</h4>
-<p><code>map demo &lt;name&gt;</code>
-は、投影法・タイント・レイヤ・ビューポートを<strong>ワンコマンド</strong>でまとめて設定し、その場で授業・発表に使える状態にする。<code>map demo</code>
-だけで一覧が出る。2系統ある。</p>
-<p><strong>(1) 地球物理コンセプトのデモ</strong> —
-1つの概念を1コマンドで:</p>
-<pre><code>map demo spreading        # 海洋底拡大 — 海嶺対称の海洋底年代（Mollweide）
-map demo subduction       # 沈み込み帯（日本）— 海溝・和達-ベニオフ面・火山弧
-map demo isostasy         # アイソスタシー — ヒマラヤの地殻の根（ブーゲー異常）
-map demo plumes           # ホットスポット — 太平洋のプルームと火山列（地球儀）
-map demo floodbasalts     # 洪水玄武岩とホットスポット — LIP→プルーム尾の連結（全球）
-map demo deformation      # プレートは変形帯で動く — ひずみ速度＋地震＋境界
-map demo heatflow         # 地球の熱 — 表面熱流量の全球分布
-map demo stress           # 地殻応力場 — SHmax 方位とプレート境界</code></pre>
-<p>各デモは関係するレイヤだけを ON にし（他は
-OFF）、適切な投影法・中心・タイントを設定する。実行後にコンソールに「何を見ているか／何に注目すべきか」の解説が出る。</p>
-<p><strong>(2) 地震（気象庁カタログの余震系列）</strong> —
-代表的な余震系列を1コマンドで:</p>
-<pre><code>map demo kobe             # 1995 兵庫県南部地震 (M7.3)
-map demo tottori          # 2000 鳥取県西部地震 (M7.3)
-map demo tohoku           # 2011 東北地方太平洋沖地震 (M9.0)
-map demo kumamoto         # 2016 熊本地震 (M7.3)</code></pre>
-<p>地震デモは JMA
-カタログへの切替・時間窓の設定・ビューポートのズームをまとめて行い、余震雲（＝断層面）が画面いっぱいに出る状態にする。表示後
-<code>map time play</code> で時刻送り再生、<code>map catalog usgs</code>
-で世界カタログに戻る。</p>
-<p>どちらの系統も
-Mw・深さ・領域マスクが残っていればクリアされ、クリーンな表示になる。</p>
+<p>余震系列をワンコマンドで出す教材デモ（<code>map demo kobe</code> /
+<code>tottori</code> / <code>tohoku</code> / <code>kumamoto</code>）は §
+4.6 にまとめてある。</p>
 <h3 id="地形陸標高海底地形">4.15. 地形（陸標高＋海底地形）</h3>
 <pre><code>map layer bathymetry on           # 地形（陸の標高＋海底の水深）を表示
 map layer bathymetry off          # 非表示（既定）</code></pre>
@@ -966,7 +984,8 @@ m〜）。<strong>海</strong>は深度濃淡（薄青＝大陸棚 → 濃紺＝
 <li>出典: 海底地形 = Natural Earth、陸標高 = ETOPO1 Global Relief
 Model（NOAA NCEI）。</li>
 </ul>
-<h4 id="高解像度版map-detail">高解像度版（<code>map detail</code>）</h4>
+<h4 id="高解像度版map-detail">4.15.1.
+高解像度版（<code>map detail</code>）</h4>
 <pre><code>map detail load                   # shinpa-hires.json を読み込む
 map detail off                    # バンドル既定の解像度に戻す
 map detail                        # 現在の解像度を表示</code></pre>
@@ -976,12 +995,11 @@ map detail                        # 現在の解像度を表示</code></pre>
 0.05°≒5.5km＋Natural Earth 10m 海岸線、約 10.5
 MB）をファイル選択で読み込むと、地形・海岸線が高解像度に差し替わる。完全版カタログ（<code>map catalog load</code>）と同じ方式で、この教材版には同梱されない（<code>shinpa-hires.json</code>
 を別途入手する）。</p>
-<h4
-id="タイントのデータ切替map-tint">タイントのデータ切替（<code>map tint</code>）</h4>
+<h4 id="タイントのデータ切替map-tint">4.15.2.
+タイントのデータ切替（<code>map tint</code>）</h4>
 <pre><code>map tint relief                   # 地形（陸標高＋海底地形、既定）
 map tint age                      # 海洋底の年代（EarthByte）
 map tint strain                   # ひずみ速度（GSRM v2.1）
-map tint heat                     # 地殻熱流量（Lucazeau 2019）
 map tint sediment                 # 海洋堆積層厚（GlobSed v3）
 map tint magnetic                 # 地磁気異常（EMAG2v3）
 map tint                          # 現在のデータセットを表示</code></pre>
@@ -1007,12 +1025,8 @@ al. 2014）の測地ひずみ速度テンソルの第二不変量 √(ε̇₁²
 <strong>内部は無着色のまま</strong>＝「地殻は狭い帯状の変形帯でのみ変形し、内部は剛体的に動く」というプレートテクトニクスの核心がそのまま見える。<code>map layer plate</code>・<code>map layer quakes</code>
 と重ねると、変形帯＝地震帯＝プレート境界の対応が読める。出典: GEM GSRM
 v2.1（Kreemer, Blewitt &amp; Klein 2014, G-Cubed）。</li>
-<li><strong><code>heat</code></strong> —
-<strong>地殻表面熱流量</strong>（mW/m²）。Lucazeau (2019)
-の予測熱流量を全球 0.5°グリッドで段彩（青＝低い → 赤＝高い、線形
-35–150、13段）。<strong>中央海嶺・リフト・若い火山地域で高く</strong>（マントルからの熱供給）、<strong>古い海洋底・先カンブリア紀の安定大陸（クラトン）で低い</strong>。<code>age</code>（海洋底年代）と対で見ると「若い海洋底ほど熱い」海洋底冷却の関係が読める。出典:
-Lucazeau, F. (2019), Analysis and Mapping of an Updated Terrestrial Heat
-Flow Data Set, G-Cubed 20, 4001–4024。</li>
+<li>⚠
+<strong><code>heat</code>（表面熱流量）はこの教材版に同梱していません</strong>（元データの再配布条件が確認できていないため）。指定すると「同梱していません」と表示されます。</li>
 <li><strong><code>sediment</code></strong> —
 <strong>海洋堆積層の厚さ</strong>（m）。GlobSed v3（Straume et
 al. 2019）の全海洋堆積層厚を
@@ -1041,8 +1055,8 @@ EMAG2v3（Meyer et al. 2017、NCEI、2分グリッドの UpCont 版を
 <blockquote>
 <p>今後さらにデータセットを <code>map tint</code> に追加予定。</p>
 </blockquote>
-<h4
-id="津波到達時間map-tsunami">津波到達時間（<code>map tsunami</code>）</h4>
+<h4 id="津波到達時間map-tsunami">4.15.3.
+津波到達時間（<code>map tsunami</code>）</h4>
 <pre><code>map tsunami 142.9 38.1            # 震源 (経度,緯度) からの津波到達時間
 map tsunami play                  # 波面が広がるアニメーション（既定16秒）
 map tsunami play 30               # 再生時間を秒で指定
@@ -1089,7 +1103,7 @@ Program。</li>
 plumes）</h3>
 <pre><code>map layer hotspots on             # ホットスポット／マントルプルームを表示
 map layer hotspots off            # 非表示</code></pre>
-<p>世界のホットスポット約46（マントルプルームに由来する火成活動の中心）を、名称つきの暖色の円でプロットする。</p>
+<p>世界のホットスポット68か所（マントルプルームに由来する火成活動の中心）を、名称つきの暖色の円でプロットする。</p>
 <ul>
 <li><strong>一次プルーム（深部マントル由来）を区別</strong>: Courtillot,
 Davaille, Besse &amp; Stock (2003)「Three distinct types of hotspots in
@@ -1103,9 +1117,13 @@ Tristan）に<strong>ハロー（二重円）</strong>を付ける。これら�
 <li>各ホットスポットに名称ラベルが付く。混雑するときは
 <code>map style hotspot-label off</code>
 でラベルだけ消せる（マーカーは残る）。凡例は地図左上。</li>
-<li>出典: 座標は Wikipedia「Hotspot
-(geology)」のコンパイル、一次／その他の分類は Courtillot et
-al. (2003)。</li>
+<li>出典: 座標は EarthByte GPlates GeoData
+のホットスポット編纂（Whittaker, Afonso, Masterton, Müller, Wessel,
+Williams &amp; Seton (2015), Nature Geoscience 8, 479–483,
+doi:10.1038/ngeo2437、CC-BY 4.0）。一次（深部起源）／その他の分類は
+Courtillot, Davaille, Besse &amp; Stock (2003), EPSL 205, 295–308。なお
+Macdonald のみ、EarthByte の座標が海山の実在位置から約 1,900 km
+離れているため Courtillot et al. (2003) Table 1 の値を採用。</li>
 </ul>
 <h3 id="大規模火成岩区lip洪水玄武岩">4.18.
 大規模火成岩区（LIP／洪水玄武岩）</h3>
@@ -1113,12 +1131,14 @@ al. (2003)。</li>
 map style lip-data johansson      # データ源: 海洋海台＋大陸/顕生代（既定, 連結つき）
 map style lip-data ernst          # データ源: 大陸洪水玄武岩＋岩脈群/先カンブリア〜現在(~1272Ma)
 map style lip-scope major         # 主要 LIP のみ（既定, ~27件・ホットスポット連結つき）
-map style lip-scope all           # データセット全プロビンス（johansson=143/ernst=58）
+map style lip-scope all           # データセット全プロビンス（johansson=143/ernst=57）
 map style lip-style outline         # 実分布の輪郭（半透明ポリゴン, 既定）
 map style lip-style marker         # 円/菱形マーカー（色=年代/大きさ=面積/形=種別）
 map style lip-style both            # マーカー＋輪郭
 map style lip-link on|off          # LIP→ホットスポットの連結線（既定 on）
-map style lip-label on             # 名前ラベル: on=既定(常に表示) / auto=マーカー時のみ / off=非表示
+map style lip-label on             # 名前ラベル: on（既定・常に表示）
+map style lip-label auto           #             auto（marker 表示のときだけ）
+map style lip-label off            #             off（非表示）
 map demo floodbasalts             # 洪水玄武岩とホットスポットのデモ（地球儀／全球）</code></pre>
 <p>大規模火成岩区（Large Igneous Province;
 大陸<strong>洪水玄武岩</strong>・海洋海台・珪長質
@@ -1164,10 +1184,16 @@ LIP
 (2018)</strong> <em>GRL</em> 45, 5380–5389（<a
 href="https://doi.org/10.1029/2017GL076691">doi:10.1029/2017GL076691</a>）。ernst
 = <strong>Ernst &amp; Youbi (2017)</strong> <em>Palaeogeogr.
-Palaeoclimatol. Palaeoecol.</em> 478, 30–52 ＋ <strong>Ernst et
-al. (2021)</strong> AGU Geophys. Monogr. 255 Ch.1（輪郭は Park et
-al. 2020
-経由）。年代・面積・重心・ポリゴンはデータセット値、LIP↔︎ホットスポット連結は
+Palaeoclimatol. Palaeoecol.</em> 478, 30–52（<a
+href="https://doi.org/10.1016/j.palaeo.2017.03.014">doi:10.1016/j.palaeo.2017.03.014</a>）＋
+<strong>Ernst et al. (2021)</strong> Ernst, Dickson &amp; Bekker
+編『Large Igneous Provinces: A Driver of Global Environmental and Biotic
+Changes』AGU Geophys. Monogr. 255, 1–26（<a
+href="https://doi.org/10.1002/9781119507444.ch1">doi:10.1002/9781119507444.ch1</a>）＋
+<strong>Park et al. (2021)</strong> 同書（<a
+href="https://doi.org/10.1002/9781119507444.ch7">doi:10.1002/9781119507444.ch7</a>）。この
+3 件は権利者 R. E. Ernst
+氏本人の指定による帰属で、氏の明示的許諾（2026-09-10）に基づき同梱している。表示用に簡略化した輪郭であり、元データベースの再配布ではない。年代・面積・重心・ポリゴンはデータセット値、LIP↔︎ホットスポット連結は
 Courtillot et al. (2003) / Ernst (2014)
 のキュレーション。<code>refs</code> コマンドでも表示。</li>
 </ul>
@@ -1192,7 +1218,7 @@ map layer lip on                  # LIP（軌跡の古い端＝プルームの�
 Louisville, Réunion→Deccan, Tristan／Gough→Walvis→Etendeka, Kerguelen,
 Marion, Iceland, Yellowstone→Columbia River, Easter, Galápagos, Afar,
 Caroline, Tasmantid, Cobb, Samoa, Society, Marquesas, St. Helena,
-Trindade, Crozet（計21本）。</li>
+Trindade, Crozet（計20本）。</li>
 <li><strong>海嶺をまたぐ軌跡</strong>（Réunion, Tristan
 等）は時代ごとに所属プレートが変わるので、その都度プレートを判定して計算（板境界では軌跡を分割）。共役のもう一方の枝（例:
 Tristan の南米側 Rio Grande
@@ -1296,7 +1322,7 @@ map style sites-label-size 14     # 局名ラベルのフォント px（既定 9
 <p><strong>任意の観測点・地点リストを地図に点で重ねる</strong>汎用レイヤ。<code>code,lat,lon</code>
 を持つ CSV
 を読み込み、各点を色付きドットで描く。地震波形と関係ない地点群（地殻変動観測網・GNSS点・任意のサイト一覧）を載せたいとき用。FDSN
-レイヤ（§前出、IRIS/EarthScope
+レイヤ（§ 4.28、IRIS/EarthScope
 の同梱地震計網）とは別物で、<strong>利用者が持ち込む任意の CSV</strong>
 を描く。</p>
 <ul>
@@ -1340,11 +1366,14 @@ off）。<code>on</code>＝<code>short</code>＝ネットワーク接頭辞な�
 で東北）、<code>map fit japan</code>、<code>map fit sites</code>（読み込んだ観測点の範囲）でビューを一発でズーム＋センタリングできる。</li>
 <li><strong>海岸線・標高/海底を精細に</strong>:
 地域ズームでデフォルト（NE 50m 海岸線・0.25° relief）が粗いときは
-<strong><code>map detail on</code></strong> 一発で hi-res（NE 10m 海岸線
-＋ 0.05°
-relief、約5倍精細）に切替（ビルドに同梱＝ファイル選択不要）。<code>map detail off</code>
-で戻す。外部の独自パックを使うときだけ
-<code>map detail load &lt;file&gt;</code>。</li>
+<strong><code>map detail load</code></strong> で hi-res パック
+<code>shinpa-hires.json</code>（NE 10m 海岸線 ＋ 0.05°
+relief、約5倍精細）を読み込む。<code>map detail off</code>
+で内蔵の解像度に戻る。⚠<strong>この教材版に hi-res
+パックは同梱していない</strong>ため <code>map detail on</code>
+は「同梱パックが見つからない」と表示される（<code>shinpa-hires.json</code>
+を別途入手して <code>map detail load</code> で読む。§ 4.15
+も参照）。</li>
 <li><strong>さらに細かい自前海岸線</strong>: 内蔵は NE 10m（~280 m
 量子化）が最細。GMT/GSHHG 級（例: GSHHG full-res
 から作った三陸リアス海岸）が要るときは
@@ -1422,7 +1451,7 @@ net_Mw。小さいほど高感度、大きいほど死角）。</li>
 <li><strong>配色</strong>:
 知覚均等な連続カラーマップ（<code>scalar-color</code>）。<strong><code>scalar-rev on</code>
 で反転</strong>すると低値が明色になり、検出限界マップの慣例（小さい
-Mw＝高感度＝「良い」を明色で強調）に合う。透過で濃淡を作らない作図規律に従い、既定の不透明度は
+Mw＝高感度＝「良い」を明色で強調）に合う。重なったセルが半透明で濃淡を作ると、その濃淡自体がデータに見えて誤読を生むため、既定の不透明度は
 <strong>1</strong>。</li>
 <li><strong>カラーバー</strong>:
 左上にタイトル（<code>scalar cbar</code>）＋下端に最小値/中央値/最大値。</li>
@@ -1529,7 +1558,7 @@ Hi-net/F-net など各国稠密網の一部は未収録（将来 FDSN federated 
 <pre><code>map tomo                          # マントル Vs トモグラフィを表示（既定 S362ANI ~600km）
 map tomo 2800                     # 深さ 2800km のスライス（最寄りにスナップ）
 map tomo up                       # 一つ浅いスライス / down で深い
-map tomo model s40rts             # モデル切替（下記8種。S40RTSは球面調和で滑らか）
+map tomo model s40rts             # モデル切替（下記7モデル。S40RTSは球面調和で滑らか）
 map tomo models                   # モデル一覧
 map tomo contour 0.5              # ±0.5% 間隔の等値線を重ねる（off で消す）
 map tomo section 165 40 110 40    # 大円に沿った深さ断面図（lon1 lat1 lon2 lat2）
@@ -1654,7 +1683,9 @@ SubMachine と同じ使い方。</li>
 で中止。断面を切った後も <code>Esc</code> で <code>section pick</code>
 に戻ってやり直せる（もう一度 <code>Esc</code> で地図へ）。</p></li>
 <li><p><strong>断面に地震波線（ray path）を重ねる</strong>
-<code>map tomo section ray &lt;phase…&gt; [model &lt;名&gt;] [depth &lt;km&gt;]</code>:
+<code>map tomo section ray &lt;phase…&gt; [model &lt;名&gt;] [depth &lt;km&gt;]</code>（⚠
+この機能も走時エンジン依存のため、<strong>Sympa! Globe
+版では無効</strong>＝「この版には含まれていない機能です」と表示される。フル版のシンパ！が必要）:
 指定フェーズ（<code>P S PcP ScS PKP …</code>）の波線を anisotime
 で計算し、断面の (距離°×深さ)
 平面にそのまま重ねて描く。<strong>既定は断面の端から端まで（断面の大円距離
@@ -1707,24 +1738,38 @@ mirror は描かず前方の波線のみ。</p></li>
 出力は未対応・ブラウザ表示のみ。クリック配置等の細かい操作は split off
 で。） &gt; ⚠ 日本シームレス地質図 V2（<code>map tint geology</code> /
 <code>map layer geology</code>）と日本の地体構造区分（terrane
-subdivision）のデータは同梱していない。地質区分を見たい場合は §
-4.46（全球地質プロビンス, Hasterok et al. 2022）を使うこと。</p></li>
+subdivision）のデータは同梱していない。全球版の地質区分（§ 4.46
+全球地質プロビンス, Hasterok et
+al. 2022）も、この教材版には同梱していない。</p></li>
 <li><p><strong>★汎用版★ 異なる物理量の左右並置</strong>
 <code>map split &lt;A&gt; &lt;B&gt;</code>: 上記
 <code>map tomo split</code>
 の一般化。<strong>異なる2つのタイント（物理量）を左右に並べ</strong>、同じ視点・同じ投影・同じ表示範囲で世界地球を回しながら見比べられる（<strong>地球内部・表層の物理量を直接対比する教材として</strong>有効）。A/B
 は
-<code>relief</code>（標高）／<code>age</code>（プレート年代）／<code>strain</code>（ひずみ速度）／<code>heat</code>（熱流量）／<code>sediment</code>（堆積層厚）／<code>magnetic</code>（磁気異常）／<code>tomo</code>（マントルトモ・現在モデル）、またはトモモデルキー（<code>s40rts</code>・<code>s362ani</code>
+<code>relief</code>（標高）／<code>age</code>（プレート年代）／<code>strain</code>（ひずみ速度）／<code>sediment</code>（堆積層厚）／<code>magnetic</code>（磁気異常）／<code>tomo</code>（マントルトモ・現在モデル）、またはトモモデルキー（<code>s40rts</code>・<code>s362ani</code>
 等）（⚠
 <code>crust</code>／<code>crustvp</code>／<code>crustvs</code>（CRUST1.0
-系地殻データ）・<code>gravity</code>／<code>bouguer</code>（重力系データ）はこの教材版に同梱していないため選択不可）。例:
+系地殻データ）・<code>gravity</code>／<code>bouguer</code>（重力系データ）・<code>heat</code>（熱流量）はこの教材版に同梱していないため選択不可）。例:
 <code>map split age relief</code>（海洋プレート年代と海底地形の対応＝ridge
 から離れるほど深くなる＆age
-が古くなる）、<code>map split heat sediment</code>（熱流量と堆積層厚＝中央海嶺で高熱流・薄い堆積／古い海洋底で低熱流・厚い堆積、age
-と対で見ると海洋底冷却の関係が読める）、<code>map split strain relief</code>（変形帯と地形の対応＝プレート境界の変形帯が海嶺・海溝の地形と重なる）。パン・ズーム同期、<code>map split off</code>
+が古くなる）、<code>map split age sediment</code>（海洋底年代と堆積層厚＝中央海嶺は若く堆積物が薄い／古い海洋底ほど厚く積もる）、<code>map split strain relief</code>（変形帯と地形の対応＝プレート境界の変形帯が海嶺・海溝の地形と重なる）。パン・ズーム同期、<code>map split off</code>
 で解除。<code>map proj ortho</code>
 で<strong>ぐるぐる回せる正射投影</strong>にして並べると教育効果大。SVG
 出力は単一タイントのみ＝ブラウザ表示専用。</p></li>
+<li><p><strong>プレート復元中はタイントを表示しない</strong>:
+<code>map plate-age &lt;Ma&gt;</code>（Ma &gt;
+0）で過去へ戻している間は、タイント（海洋底年代・地形・堆積層厚・磁気異常・トモグラフィ等）とそのカラーバーを<strong>自動的に隠す</strong>。これらの全球グリッドは<strong>すべて現在の地球のデータ</strong>であり、過去の地球儀に重ねると<strong>当時まだ存在しなかった海洋底が色付きで出て、当時あって既に沈み込んだ海洋底には色が付かない</strong>という、時代の合わない図になるため（「これが当時の海洋底年代だ」という誤読を防ぐ）。<code>map plate-age 0</code>
+に戻すと再び表示される。</p></li>
+<li><p><strong>★表裏ビュー★
+同じ物理量を2回指定すると「地球の裏側」が出る</strong>
+<code>map split &lt;X&gt; &lt;X&gt;</code>: A と B
+に<strong>同じもの</strong>を指定した場合だけ、右側が<strong>対蹠点（地球の反対側）の視点</strong>に切り替わる。例:
+<code>map proj ortho; map split age age</code> ＝
+左が正面の半球、右がその裏の半球。<strong>地球儀の構造的な弱点＝一度に片側の半球しか見えない、を解消する</strong>（左右は回転・ズームが同期したまま、常に表裏の関係を保つ）。ラベルは「（表側）／（裏側＝地球の反対側）」。大西洋と太平洋のように<strong>地球の反対側どうしにある対象を全体として見比べる</strong>とき（どちらの海洋底が若いか、等）に効く。図法ごとの意味は次のとおり:
+<strong>ortho / aeqd</strong> =
+視点の対蹠点（真裏の半球）。<strong>plate-carrée / mollweide</strong> =
+平面図法は元々全球が見えているので、代わりに<strong>中央子午線を 180°
+ずらす</strong>（左＝大西洋中心／右＝太平洋中心）＝端で分断される海洋を互いに補完でき、継ぎ目に切られて見えなかったものが見える。</p></li>
 <li><p><strong>モデル並置（断面比較）</strong>
 <code>map tomo compare &lt;モデルA&gt; &lt;モデルB&gt;</code>:
 <strong>先に <code>map tomo section</code>
@@ -1737,18 +1782,16 @@ profile を並べて直接見比べる</strong>のが目的。例:
 <strong>2800km</strong>（最下部マントル）= 太平洋・アフリカ直下の2大
 <strong>LLSVP（巨大低速度域＝スーパープルーム）</strong>
 が赤、周囲の沈み込んだスラブの墓場が青。<strong>600〜1000km</strong>（遷移層〜下部マントル上部）=
-沈み込み帯の下に滞留・沈降するスラブが青（特に P波の GAP-P4
-でスラブが鮮明）。<code>map layer plate</code>・<code>map layer slab</code>・<code>map layer quakes</code>
+沈み込み帯の下に滞留・沈降するスラブが青（グリッド系の
+<code>gypsum</code>・<code>semucb</code>
+はスラブの縁が鋭く見える）。<code>map layer plate</code>・<code>map layer slab</code>・<code>map layer quakes</code>
 と重ねると、表層のプレート運動と深部構造の対応が読める。</p></li>
 <li><p>全投影対応（逆投影サンプリング）。<code>map detail</code>
 の高解像度地形とは独立。SEMUCB-WM1 は絶対 Vs(km/s)
 で配布のため各深さの横方向平均からの <strong>% 異常</strong>に換算。SH
 系は元のグリッドから自前で球面調和に再フィットしたもの。</p></li>
-<li><p>出典: S系6モデルは IRIS/EarthScope EMC、GAP-P4 は
-JAMSTEC（⚠GAP-P4 は JAMSTEC GODAC
-のデータ利用規約に従うこと。配布時は要確認）。各原論文は本文中・<code>refs tomo</code>。</p></li>
 <li><p>出典: 各モデルの原論文（上記）＋ IRIS/EarthScope
-EMC。アプリ内では
+EMC（同梱7モデル）。アプリ内では
 <code>refs tomo</code>、レイヤ表示時に現モデルの出典も表示。</p></li>
 </ul>
 <h3 id="端点と楕円体補正">4.30. 端点と楕円体補正</h3>
@@ -1774,6 +1817,9 @@ EMC。アプリ内では
 <p>複数の波形ファイルが同じ震源座標（±0.01°、深さ ±1km
 以内）を持つ場合は1つの ★
 に集約される。観測点も座標一致（±0.001°）で集約。</p>
+<p>★・▽ の<strong>色モード（uniform / palette /
+trace）と既定色の指定</strong>は § 4.36 末尾「震源 ★ と観測点 ▽
+の色」にまとめてある。</p>
 <p><strong>多イベント/多観測点の色分け</strong>:</p>
 <p><code>map style event-color palette</code> または
 <code>map style station-color palette</code> で複数の震源 / 観測点を
@@ -1792,6 +1838,17 @@ OFF」状態を検出すると、<code>map style event-color palette</code>
 などで新規ファイルを追加した後は、再度 <code>map</code>
 を打てば最新の状態に更新される（描画はそのまま継続）。</p>
 <h3 id="マーカーの色と形">4.33. マーカーの色と形</h3>
+<blockquote>
+<p>⚠ <strong>走時・波線の機能（<code>theory</code> と
+<code>map ray</code>）はフル版のシンパ！が必要</strong>で、この Sympa!
+Globe 版では動かない。走時計算エンジン（anisotime-js）は
+<strong>GPL-3.0</strong> のため、GPL
+のコードを含めない方針のこの教材版には同梱していない（サイズの都合ではない）。そのため
+<code>theory</code>／<code>map ray</code>
+はこの版では<strong>コマンドごと無効</strong>で、実行すると「この版には含まれていない機能です」と表示される（<code>help</code>
+と Tab
+補完にも出てこない）。波線図を作るときは波形版のシンパ！を使う。以下は波形版での説明。</p>
+</blockquote>
 <p><code>map ray &lt;phase&gt;</code> でプロットされる ◆ ◇
 マーカーは:</p>
 <ul>
@@ -1810,6 +1867,10 @@ OFF」状態を検出すると、<code>map style event-color palette</code>
 の挙動が一目で分かる。</p>
 <h3 id="マウス操作">4.34. マウス操作</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>操作</th>
@@ -1818,8 +1879,12 @@ OFF」状態を検出すると、<code>map style event-color palette</code>
 </thead>
 <tbody>
 <tr>
-<td>左ドラッグ or 右ドラッグ</td>
-<td>パン（地図移動）</td>
+<td>左ドラッグ</td>
+<td><strong>ortho（地球儀）は回転</strong>／それ以外の投影はパン（地図移動）</td>
+</tr>
+<tr>
+<td>右ドラッグ</td>
+<td>パン（地図移動。全投影共通）</td>
 </tr>
 <tr>
 <td>ホイール</td>
@@ -1842,6 +1907,17 @@ OFF」状態を検出すると、<code>map style event-color palette</code>
 <p>ズーム範囲は自動フィット倍率の 0.5×〜256×。右上の “drag = pan …”
 ヒントはユーザーが操作を始めた時点で消える。</p>
 <h3 id="波線マーカー">4.35. 波線マーカー</h3>
+<blockquote>
+<p>⚠ <strong>走時・波線の機能（<code>theory</code> と
+<code>map ray</code>）はフル版のシンパ！が必要</strong>で、この Sympa!
+Globe 版では動かない。走時計算エンジン（anisotime-js）は
+<strong>GPL-3.0</strong> のため、GPL
+のコードを含めない方針のこの教材版には同梱していない（サイズの都合ではない）。そのため
+<code>theory</code>／<code>map ray</code>
+はこの版では<strong>コマンドごと無効</strong>で、実行すると「この版には含まれていない機能です」と表示される（<code>help</code>
+と Tab
+補完にも出てこない）。波線図を作るときは波形版のシンパ！を使う。以下は波形版での説明。</p>
+</blockquote>
 <p><code>theory &lt;model&gt;</code> で走時カタログを構築済みの状態で
 <code>map ray &lt;phase&gt;</code>
 を打つと、各震源-観測点ペアの大円弧上に <strong>turning / reflection
@@ -1948,6 +2024,17 @@ turn #1/CMB 下反射/K turn #2/CMB 出の 5 点。中央 CMB 反射が SKS
 との見分け方 - Pd, Sd: CMB 上の長い回折弧に単一マーカーは意味が薄いので
 Δ/2 の placeholder</p>
 <h3 id="深さ帯ハイライト">4.36. 深さ帯ハイライト</h3>
+<blockquote>
+<p>⚠ <strong>走時・波線の機能（<code>theory</code> と
+<code>map ray</code>）はフル版のシンパ！が必要</strong>で、この Sympa!
+Globe 版では動かない。走時計算エンジン（anisotime-js）は
+<strong>GPL-3.0</strong> のため、GPL
+のコードを含めない方針のこの教材版には同梱していない（サイズの都合ではない）。そのため
+<code>theory</code>／<code>map ray</code>
+はこの版では<strong>コマンドごと無効</strong>で、実行すると「この版には含まれていない機能です」と表示される（<code>help</code>
+と Tab
+補完にも出てこない）。波線図を作るときは波形版のシンパ！を使う。以下は波形版での説明。</p>
+</blockquote>
 <p><code>map layer raypath on</code>（既定 ON）+
 <code>map ray &lt;phase&gt;</code> で、大円弧を <strong>ray
 の深さに応じて色分け</strong>して描画する。</p>
@@ -2032,7 +2119,8 @@ feel）。例えば日本が画面左に消えていくと、アメリカが右�
 <h3 id="既知の制限">4.38. 既知の制限</h3>
 <ul>
 <li>大円弧は震源-観測点の単純な大円。波線（屈折/反射の幾何）は
-<code>map ray</code> / <code>theory</code> 併用で表示（§ 4.35）</li>
+<code>map ray</code> / <code>theory</code> 併用で表示（§ 4.35。⚠
+フル版のシンパ！が必要）</li>
 <li>AEQD は単一の中心点のみ（複数イベント時は自動 Plate Carrée
 fallback）</li>
 <li>パン/ズームの undo は今のところなし（dblclick / Esc
@@ -2311,7 +2399,7 @@ map save tectonic_overview.svg</code></pre>
 古地理復元（プレート再構成）</h3>
 <p>GPlates
 流の有限回転モデルで、<strong>任意の年代における大陸の位置</strong>を復元して海岸線として描画する。日本列島の成り立ちから超大陸ロディニアまで連続的に遡れる。</p>
-<pre><code>map plate-model Merdith2021         # モデル選択（6 種類）
+<pre><code>map plate-model Merdith2021         # モデル選択（一覧は5件・この版で使えるのは3件。名前は大文字小文字を区別しない）
 map plate-age 200                   # 200 Ma に切替（茶色の線で古地理を描画）
 map plate-age play 30               # 逆回し: 0 → max を 30 秒で再生（現在→過去）
 map plate-age play 30 forward       # 順回し: max → 0 を 30 秒で再生（過去→現在）
@@ -2421,10 +2509,14 @@ Manager より。<strong>⚠ 現在系モデルとは 540 Ma
 </table>
 <blockquote>
 <p>⚠ 上記6モデルのうち <strong>Muller2019・Scotese・Li2013
-はライセンス確認中のため同梱していない</strong>。使えるのは
+はライセンス確認中のため同梱していない</strong>。実機での挙動は3段階に分かれる:
+<strong>Muller2019 は <code>map plate-model</code>
+の一覧にも出ない</strong>（一覧は Cao2024 / Merdith2021 / Matthews2016 /
+Scotese / Li2013 の5件）／<strong>Scotese・Li2013
+は一覧に出るがデータが無く、選ぶと「モデルデータが見つかりません」になる</strong>／実際に使えるのは
 <strong>Merdith2021・Matthews2016・Cao2024</strong>
 の3モデル（いずれも海岸線復元＋境界トポロジー完全対応で、現在まで連続的に大陸移動を追える）。以下の
-Li2013 の記述は参考情報。</p>
+Muller2019 / Scotese / Li2013 の記述は参考情報。</p>
 </blockquote>
 <p><strong>⚠ Li2013（RODINIA）の不連続について</strong>: Li et al. 2013
 は 530–1100 Ma の<strong>独立した Neoproterozoic
@@ -2583,11 +2675,31 @@ OFF、特殊機能）。Euler
 極まわりに小円軌道で動くので、極の位置を見るだけでプレートがどの方向へ動くかが幾何的に読める。複数プレートで同じ極になっていたら剛体的に一体運動している証拠（例:
 Merdith 200 Ma で SA/IND/AFR/AUS/ANT が同じ極＝Gondwana
 結合の可視化）。</p>
-<p><strong>スライダー上の地質境界マーカー</strong>:</p>
-<p>時代スライダーの下に主要な地質時代境界の刻みを表示（モデル範囲内のものだけ）:
-K-Pg (66 Ma) / P-Tr (252 Ma) / カンブリア (541 Ma) / クライオジェニアン
-(720 Ma) / トニアン (1000 Ma) / コロンビア (1600 Ma)。後 2 つは深い
-RODINIA・Cao2024 でのみ現れる。</p>
+<p><strong>スライダー上の地質時代（ICS 準拠）</strong>
+<code>map style timescale on|off</code>:</p>
+<p>時代スライダーに<strong>国際年代層序表（ICS）の「紀」を公式配色の帯</strong>で敷く（既定
+on）。モデルの範囲に入る紀だけが描かれ、帯の幅が足りるものには名前が入る（1000
+Ma のモデルでは第四紀のように短い紀は 1 px
+未満になるため名前は出ない）。あわせて<strong>現在の年代の右に紀の名前</strong>が出る（例「200
+Ma ジュラ紀」）。「200 Ma
+と言われても時代のイメージが付かない」という授業での指摘に応えるための表示である。</p>
+<ul>
+<li><strong><code>map style timescale off</code></strong>
+で帯を消せる（色が邪魔なときや、白地で図を作りたいとき）。<strong>off
+にしても年代ラベル横の紀名は残る</strong>ので、時代の手掛かりは失われない。off
+のときは従来どおり主要境界の刻みだけを表示する（K-Pg 66 / P-Tr 251.902 /
+カンブリア 538.8 / クライオジェニアン 720 / トニアン 1000 / コロンビア
+1600 Ma。後 2 つは深い RODINIA・Cao2024 でのみ現れる）。</li>
+<li>表示は<strong>紀のレベル</strong>（代・世は出さない）。スライダーの横幅で読める粒度に絞っている。</li>
+<li>境界がちょうど当たる年代は<strong>古い側の紀</strong>として扱う（例:
+538.8 Ma はエディアカラ紀）。</li>
+<li>出典: International Chronostratigraphic Chart（国際層序委員会, <a
+href="https://stratigraphy.org/chart"
+class="uri">https://stratigraphy.org/chart</a>）。境界年代・配色は
+Macrostrat（<a href="https://macrostrat.org"
+class="uri">https://macrostrat.org</a>, CC-BY 4.0）の “international
+periods” 経由で取得した。</li>
+</ul>
 <p><strong>アニメーションループ</strong>:</p>
 <p><code>map plate-age play loop</code>
 で繰り返し再生（端まで行ったら反対側へワープして続行）。<code>play 60 forward loop</code>
@@ -2600,15 +2712,17 @@ RODINIA・Cao2024 でのみ現れる。</p>
 速度ベクトル。Illustrator で開いて編集可能。</p>
 <p><strong>制限</strong>:</p>
 <ul>
-<li>アニメ再生は 0 → max / max → 0
-の一方向スイープ（ループは未対応）。</li>
+<li>アニメ再生は 0 → max / max → 0 の一方向スイープ（繰り返したいときは
+<code>play … loop</code>＝上記「アニメーションのループ」）。</li>
 <li>Scotese / Li2013 は海岸線のみ（time-resolved topology
 を持たない、<code>map layer plate</code> 等は空表示）。Müller2019 /
 Matthews2016 / Merdith2021 / Cao2024
 は海岸線復元＋境界トポロジー完全対応。</li>
 </ul>
-<p><strong>典型ワークフロー（論文用 1
-枚、波形ファイル不要）</strong>:</p>
+<p><strong>典型ワークフロー（論文用 1 枚、波形ファイル不要）</strong>（⚠
+<code>theory</code>／<code>map ray</code>
+の2行はフル版のシンパ！が必要＝§ 4.35。Globe
+版では震源・観測点・大円弧までが描ける）:</p>
 <pre><code>map event add 38.1 142.9 &quot;2011 Tohoku&quot;   # 仮想震源（§ 4.39）
 map station add 35.7 139.7 Tokyo          # 仮想観測点
 theory PREM              # 走時カタログ構築
@@ -2622,6 +2736,13 @@ map save fig1_raypath.svg</code></pre>
 など）を塗り分ける教材レイヤ。<strong>Hasterok et al. (2022)</strong>
 の新しい全球地質プロビンス図（Fig.8）＝ <strong>914
 プロビンス</strong>。</p>
+<blockquote>
+<p>⚠
+<strong>このデータはこの教材版に同梱していない</strong>。出典データが
+<strong>GPL-3.0</strong>（github.com/dhasterok/global_tectonics）であり、GPL
+のコード・データを含めない方針の配布版からは除外している。<code>map layer provinces on</code>
+は「この版には同梱していません」と表示し、プレート復元図ではプレートポリゴンの色分けで代替される。以下は同梱ビルド向けの説明。</p>
+</blockquote>
 <pre><code>map layer provinces on             # 全球地質プロビンスを表示（既定: 最終造山の年代で色分け）
 map style prov-color age|type|crust   # 色分け: 年代 / 種別 / 大陸-海洋-遷移地殻
 map style prov-alpha &lt;0-1&gt;         # 透過度（既定 0.6）
@@ -2695,13 +2816,59 @@ cycle。途中で他のキーを打つと cycle はリセットされ、次の T
 </tr>
 <tr>
 <td><code>map &lt;Tab&gt;</code></td>
-<td>サブコマンド (<code>off</code>, <code>proj</code>,
-<code>center</code>, <code>layer</code>, <code>precision</code>,
-<code>style</code>, <code>ray</code>)</td>
+<td>サブコマンド（<code>off</code> <code>proj</code> <code>center</code>
+<code>fit</code> <code>rotate</code> <code>height</code>
+<code>layer</code> <code>catalog</code> <code>sloweq</code>
+<code>sites</code> <code>slip</code> <code>scalar</code>
+<code>model</code> <code>ulvz</code> <code>coast</code>
+<code>demo</code> <code>detail</code> <code>tint</code>
+<code>tomo</code> <code>tsunami</code> <code>plate-model</code>
+<code>plate-age</code> <code>paleo</code> <code>precision</code>
+<code>contour</code> <code>time</code> <code>timezone</code>
+<code>mag</code> <code>depth</code> <code>region</code>
+<code>style</code> <code>ray</code> <code>save</code> <code>segy</code>
+<code>split</code>）</td>
 </tr>
 <tr>
 <td><code>map proj &lt;Tab&gt;</code></td>
-<td><code>plate-carree</code> / <code>aeqd</code></td>
+<td><code>plate-carree</code> / <code>aeqd</code> / <code>ortho</code> /
+<code>mollweide</code></td>
+</tr>
+<tr>
+<td><code>map tint &lt;Tab&gt;</code> /
+<code>map split &lt;Tab&gt;</code></td>
+<td>タイント名（⚠ この版に同梱していない <code>crust</code>
+<code>crustvp</code> <code>crustvs</code> <code>gravity</code>
+<code>bouguer</code> <code>heat</code> <code>geology</code>
+も候補に出る）</td>
+</tr>
+<tr>
+<td><code>map tomo &lt;Tab&gt;</code></td>
+<td>深さ値 + <code>up</code> <code>down</code> <code>model</code>
+<code>models</code> <code>contour</code> <code>section</code>
+<code>smooth</code> <code>vote</code> <code>compare</code>
+<code>split</code> <code>wedge</code> <code>off</code></td>
+</tr>
+<tr>
+<td><code>map catalog &lt;Tab&gt;</code></td>
+<td><code>usgs</code> / <code>jma</code> / <code>load</code></td>
+</tr>
+<tr>
+<td><code>map detail &lt;Tab&gt;</code></td>
+<td><code>on</code> / <code>off</code> / <code>load</code></td>
+</tr>
+<tr>
+<td><code>map time &lt;Tab&gt;</code> /
+<code>map timezone &lt;Tab&gt;</code></td>
+<td><code>off</code> <code>play</code> <code>stop</code> + 代表年 ／
+<code>UTC</code> <code>JST</code> <code>GMT</code></td>
+</tr>
+<tr>
+<td><code>map mag &lt;Tab&gt;</code> /
+<code>map depth &lt;Tab&gt;</code> /
+<code>map region &lt;Tab&gt;</code></td>
+<td>しきい値の代表値 + <code>off</code> ／ <code>draw</code>
+<code>off</code></td>
 </tr>
 <tr>
 <td><code>map layer &lt;Tab&gt;</code></td>
@@ -2710,7 +2877,8 @@ cycle。途中で他のキーを打つと cycle はリセットされ、次の T
 <tr>
 <td><code>map ray &lt;Tab&gt;</code></td>
 <td><code>off</code> / <code>clear</code> / <code>del</code> / phase
-名</td>
+名（⚠ Globe 版では <code>map &lt;Tab&gt;</code> の候補に
+<code>ray</code> が出ない＝走時エンジン非同梱）</td>
 </tr>
 <tr>
 <td><code>map style &lt;Tab&gt;</code></td>
@@ -2769,7 +2937,8 @@ snapshot モードに切り替わる。手動なら <code>cdsnap</code> でもOK
 より）</h3>
 <ul>
 <li>大円弧は震源-観測点の単純な大円。波線（屈折/反射の幾何）は
-<code>map ray</code> / <code>theory</code> 併用で表示（§ 4.35）</li>
+<code>map ray</code> / <code>theory</code> 併用で表示（§ 4.35。⚠
+フル版のシンパ！が必要）</li>
 <li>AEQD は単一の中心点のみ（複数イベント時は自動 Plate Carrée
 fallback）</li>
 <li>パン/ズームの undo は今のところなし（dblclick / Esc
@@ -2863,23 +3032,57 @@ fallback）</li>
 <td>古地理復元（Merdith2021 / Matthews2016 / Cao2024）（§ 4.45）</td>
 </tr>
 <tr>
+<td>教材デモ</td>
+<td><code>map demo</code> <code>map demo &lt;name&gt;</code></td>
+<td>投影・レイヤ・視点をワンコマンドで設定（概念7種＋余震系列4種）（§
+4.6）</td>
+</tr>
+<tr>
 <td>タイント</td>
 <td><code>map tint &lt;名&gt;</code>
 <code>map split &lt;A&gt; &lt;B&gt;</code></td>
-<td>地形・地殻・年代・重力・ひずみ・熱流量 等の全球データセット切替（§
-4.15）</td>
+<td>地形・海洋底年代・ひずみ速度・堆積層厚・磁気異常・トモの切替と左右並置（§
+4.15, 4.29）</td>
+</tr>
+<tr>
+<td>津波</td>
+<td><code>map tsunami &lt;lon&gt; &lt;lat&gt;</code>
+<code>map tsunami play\|movie</code></td>
+<td>水深から到達時間を自前計算・波面アニメ・WebM 書き出し（§
+4.15.3）</td>
+</tr>
+<tr>
+<td>精細化</td>
+<td><code>map detail load\|off</code> <code>map coast load</code></td>
+<td>高解像度パック・自前海岸線の読み込み（⚠ hi-res は非同梱）（§ 4.15.1,
+4.22）</td>
+</tr>
+<tr>
+<td>カタログ・時間</td>
+<td><code>map catalog &lt;usgs\|jma&gt;</code> <code>map time</code>
+<code>map timezone</code> <code>map mag</code> <code>map depth</code>
+<code>map region</code></td>
+<td>震源カタログの切替と時間・規模・深さ・領域マスク（§ 4.12–4.14）</td>
+</tr>
+<tr>
+<td>表示スケール</td>
+<td><code>map display &lt;s\|l\|xl&gt;</code>
+<code>map paper &lt;倍率&gt;</code> <code>map ruby on</code></td>
+<td>提示用の拡大／書き出しのみ拡大／ふりがな（§ 4.2–4.4）</td>
 </tr>
 <tr>
 <td>トモグラフィ</td>
 <td><code>map tomo</code> <code>map tomo model &lt;名&gt;</code>
 <code>map tomo section ...</code></td>
-<td>マントル速度モデルの深さスライス・断面（§ 4.29）</td>
+<td>マントル速度モデルの深さスライス・断面（同梱7モデル）（§ 4.29）</td>
 </tr>
 <tr>
 <td>走時・波線</td>
 <td><code>theory &lt;model&gt;</code> <code>map ray &lt;phase&gt;</code>
 <code>map event add</code> <code>map station add</code></td>
-<td>anisotime-js による理論走時・波線マーカー（§ 4.35, 4.39）</td>
+<td>仮想震源・観測点の配置（Globe で可）と理論走時・波線マーカー（⚠
+<code>theory</code>／<code>map ray</code> は Globe
+では無効＝フル版のシンパ！が必要）（§ 4.35, 4.39）</td>
 </tr>
 <tr>
 <td>自前データ</td>

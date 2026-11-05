@@ -2,7 +2,9 @@
 
 ブラウザだけで動く単一 HTML の地球科学教材ビューアです。プレートテクトニクス（プレート境界・復元モデル）、地震・火山分布、海洋底年代などを 3D 地球儀と地図で観察できます。
 
-**使い方**: https://ut-globalseismology.github.io/sympa-globe/ を開くだけ（初回は約 31 MB の読み込みがあります）。オフライン利用はこのページを「名前を付けて保存」でも可能です。
+**使い方**: https://ut-globalseismology.github.io/sympa-globe/ を開くだけ（初回は約 30 MB の読み込みがあります）。オフライン利用はこのページを「名前を付けて保存」でも可能です。
+
+ルート URL は常に最新版です。論文・教材から参照するための凍結版は版番号つきのフォルダに置いています（例: https://ut-globalseismology.github.io/sympa-globe/v1.2.0/ ）。凍結版は公開後に内容を変更しません。
 
 プレート復元モデルのうち Merdith2021 は同梱済み（オフラインでも利用可）。Matthews2016 / Cao2024 は `map plate-model` で選択した時にオンデマンド取得します（要ネット接続。`plate-*.json` が実体）。オフライン保存版では Merdith2021 をご利用ください。
 
@@ -26,5 +28,6 @@ UT Global Seismology Group, The University of Tokyo.
 1. shinpa リポで `npm run build:globe`（= `node build.js --globe`）
 2. `dist/sympa-globe.html` → 本リポ `index.html` にコピー
 3. `dist/plate-matthews2016.json` / `plate-matthews2016-topology.json` / `plate-cao2024.json` / `plate-cao2024-topology.json` の4本も本リポ直下にコピー（**index.html と lazy JSON は必ず同時に更新**。片方だけだと版不整合）
-4. マニュアル更新時は `dist/sympa-globe-manual.html` もコピー
-5. commit → push（Pages が自動デプロイ。スタック時は `gh api -X POST repos/UT-GlobalSeismology/sympa-globe/pages/builds`）
+4. マニュアル更新時は `dist/sympa-globe-manual.html` もコピー。データ出典が変わったら `CREDITS.md` も更新
+5. 凍結版を作るときは `vX.Y.Z/` フォルダを新設し、同じ 7 ファイル（`index.html`・`plate-*.json` 4 本・マニュアル・`CREDITS.md`）を入れる（lazy JSON は `index.html` と同じフォルダに無いと読めない）。既存の凍結版フォルダは変更しない
+6. commit → push（Pages が自動デプロイ。スタック時は `gh api -X POST repos/UT-GlobalSeismology/sympa-globe/pages/builds`）
